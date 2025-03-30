@@ -1,0 +1,10 @@
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (1, 'Pedro', 'Paramo', 'pparamo@gmail.com');
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (2, 'Pablo', 'Montoya', 'pmontoya@hotmail.com');
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (3, 'Ana', 'Gutierrez', 'agutierrez@gmail.com');
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (4, 'Laura', 'Acuña', 'lacuña@hotmail.com');
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (5, 'Brad', 'Pitt', 'bpitt@gmail.com');
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (6, 'Armando', 'Casas', 'acasas@hotmail.com');
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (7, 'Soledad', 'Diaz', 'sdiaz@gmail.com');
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (8, 'Amparo', 'Lopez', 'alopez@hotmail.com');
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (9, 'Timmy', 'Turner', 'tturner@gmail.com');
+INSERT INTO USUARIOS (id, nombre, apellido, correo) VALUES (10, 'Tony', 'Stark', 'tstark@hotmail.com');
