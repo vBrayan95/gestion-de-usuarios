@@ -1,5 +1,4 @@
 package com.bogota.gestionUsuarios.modelo;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,17 +16,21 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
+@Data
+@Builder
 public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@Column(nullable = false)
 	private String nombre;
-	// se puede agregar la restricción directamente en la bd, validación al recibir nuevo registro
-	@Column(unique = true)
+	@Column(nullable = false, unique = true)
 	private String correo;
 	@ManyToOne
-    @JoinColumn(name = "rol_id", nullable = false) // Llave foránea
+    @JoinColumn(name = "rol_id") // Llave foránea
     private Rol rol;
+	@Column(nullable = false)
+	private String clave;
 	
 }

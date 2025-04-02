@@ -12,24 +12,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bogota.gestionUsuarios.modelo.Rol;
-import com.bogota.gestionUsuarios.repositorio.RolRepo;
+import com.bogota.gestionUsuarios.servicio.RolServicio;
 
 @RestController
+@RequestMapping("/api")
 public class RolControlador {
 	
 	@Autowired
-	private RolRepo rolRepo;
+	private RolServicio rolServicio;
 	
 	@GetMapping("/obtenerRoles")
 	public ResponseEntity<List<Rol>> obtenerRoles() {
 		
 		try {
 			
-			List<Rol> listaRoles = new ArrayList<Rol>();
-			rolRepo.findAll().forEach(listaRoles::add);
+			List<Rol> listaRoles = rolServicio.obtenerRoles();
 			
 			if (listaRoles.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -38,7 +39,6 @@ public class RolControlador {
 			return new ResponseEntity<List<Rol>>(listaRoles,HttpStatus.OK);
 			
 		} catch (Exception exception) {
-			// TODO: handle exception
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -46,7 +46,7 @@ public class RolControlador {
 	@GetMapping("/obtenerRolesPorId/{id}")
 	public ResponseEntity<Rol> obtenerRolesPorId(@PathVariable Long id) {
 		
-		Optional<Rol> infoRol = rolRepo.findById(id);
+		Optional<Rol> infoRol = rolServicio.obtenerRolPorId(id);
 		
 		
 		if (infoRol.isPresent()) {
@@ -61,7 +61,7 @@ public class RolControlador {
 	public ResponseEntity<Rol> agregarRol(@RequestBody Rol rol) {
 		
 		
-		Rol rolObj = rolRepo.save(rol);
+		Rol rolObj = rolServicio.agregarRol(rol);
 		
 		return new ResponseEntity<>(rolObj, HttpStatus.OK);
 		
@@ -71,26 +71,16 @@ public class RolControlador {
 	public ResponseEntity<Rol> actualizarRolPorId(@PathVariable Long id, @RequestBody Rol nuevaInfoRol) {
 		
 		
-		Optional<Rol> antRol = rolRepo.findById(id);
+		Rol rolResp = rolServicio.actualizarRolPorId(id, nuevaInfoRol);
 		
-		if (antRol.isPresent()) {
-			
-			Rol nuevoRol = antRol.get();
-			nuevoRol.setNombre(nuevaInfoRol.getNombre());
-			nuevoRol.setObservacion(nuevaInfoRol.getObservacion());
-			
-			Rol RolObj = rolRepo.save(nuevoRol);
-			return new ResponseEntity<>(RolObj, HttpStatus.OK);
-		}
+		return new ResponseEntity<>(rolResp, rolResp.getId() != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 		
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
 	}
 	
 	@DeleteMapping("borrarRolPorId/{id}")
 	public ResponseEntity<HttpStatus> borrarRolPorId(@PathVariable Long id) {
 		
-		rolRepo.deleteById(id);
+		rolServicio.borrarRolPorId(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 
 	}
